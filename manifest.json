@@ -1,0 +1,53 @@
+{
+  "manifest_version": 3,
+  "name": "Play IMDb",
+  "version": "1.0.0",
+  "description": "Adds a premium Play button to IMDb movie and TV show pages for seamless streaming.",
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "*://*.imdb.com/*",
+    "*://imdb.com/*",
+    "*://proxy.garageband.rocks/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.imdb.com/*",
+        "*://imdb.com/*"
+      ],
+      "css": [
+        "content.css"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://proxy.garageband.rocks/*"
+      ],
+      "all_frames": true,
+      "js": [
+        "block-popups.js"
+      ],
+      "run_at": "document_start",
+      "world": "MAIN"
+    }
+  ],
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "Play IMDb Settings",
+    "default_icon": "icons/logo.png"
+  },
+  "icons": {
+    "16": "icons/logo.png",
+    "48": "icons/logo.png",
+    "128": "icons/logo.png"
+  }
+}
