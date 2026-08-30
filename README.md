@@ -12,15 +12,9 @@
 <img src="https://raw.githubusercontent.com/iamNVN/PlayIMDB/refs/heads/master/icons/banner.png" height="190" alt="Play IMDb Logo">
 <br>
 
-<a href="https://github.com/iamnvn/PlayIMDb/releases">
   <img src="https://img.shields.io/badge/Version-1.0.0-F5B82E?style=for-the-badge" alt="Version">
-</a>
-<a href="#-license">
   <img src="https://img.shields.io/badge/License-MIT-171717?style=for-the-badge" alt="License">
-</a>
-<a href="#-tech-stack">
   <img src="https://img.shields.io/badge/Chrome-Manifest%20V3-F5B82E?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Chrome Manifest V3">
-</a>
 
 </div>
 
