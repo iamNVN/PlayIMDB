@@ -1,25 +1,30 @@
 <div align="center">
 
-<div align="center">
   <img src="https://raw.githubusercontent.com/iamNVN/PlayIMDB/refs/heads/master/icons/logo.png"
-       width="70"
-       height="70"
+       width="80"
+       height="80"
        alt="Play IMDb Logo">
 
-  <h1 style="display:inline;">Play IMDb</h1>
-</div>
+  <h1>Play IMDb</h1>
 
-<p><b>A browser extension that lets you watch movies & TV shows directly on IMDb with a single click.
-.</b></p>
+  <p>
+    <b>Watch movies & TV shows right on IMDb with a single click.</b>
+  </p>
 
-<img src="https://raw.githubusercontent.com/iamNVN/PlayIMDB/refs/heads/master/icons/banner.png" height="200" alt="Play IMDb Logo">
-<br>
+  <img src="https://raw.githubusercontent.com/iamNVN/PlayIMDB/refs/heads/master/icons/banner.png"
+       width="85%"
+       alt="Play IMDb">
 
-<img src="https://img.shields.io/badge/Version-1.0.0-F5B82E?style=for-the-badge" alt="Version">
-&nbsp;
-<img src="https://img.shields.io/badge/License-MIT-171717?style=for-the-badge" alt="License">
-&nbsp;
-<img src="https://img.shields.io/badge/Chrome-Manifest%20V3-F5B82E?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Chrome Manifest V3">
+  <br>
+
+  <img src="https://img.shields.io/badge/Version-1.0.0-F5B82E?style=for-the-badge"
+       alt="Version">
+  &nbsp;
+  <img src="https://img.shields.io/badge/License-MIT-171717?style=for-the-badge"
+       alt="License">
+  &nbsp;
+  <img src="https://img.shields.io/badge/Chrome-Manifest%20V3-F5B82E?style=for-the-badge&logo=googlechrome&logoColor=white"
+       alt="Chrome Manifest V3">
 
 </div>
 
