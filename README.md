@@ -2,8 +2,8 @@
 
 <div align="center">
   <img src="https://raw.githubusercontent.com/iamNVN/PlayIMDB/refs/heads/master/icons/logo.png"
-       width="120"
-       height="120"
+       width="70"
+       height="70"
        alt="Play IMDb Logo">
 
   <h1 style="display:inline;">Play IMDb</h1>
@@ -26,16 +26,15 @@
 
 ## 📋 Table of Contents
 
-- [📸 Preview](#-preview)
-- [✨ Features](#-features)
-- [📦 Installation](#-installation)
-- [🚀 Usage](#-usage)
-- [🔗 How It Works](#-how-it-works)
-- [🤝 Contributing](#-contributing)
-- [⚠️ Disclaimer](#️-disclaimer)
-- [🔒 Privacy](#-privacy)
-- [🔐 Permissions](#-permissions)
-- [⚖️ License](#️-license)
+- 📸 [Preview](#-preview)
+- ✨ [Features](#-features)
+- 📦 [Installation](#-installation)
+- 🚀 [Usage](#-usage)
+- 🔗 [How It Works](#-how-it-works)
+- 🤝 [Contributing](#-contributing)
+- ⚠️ [Disclaimer](#️-disclaimer)
+- 🔒 [Privacy](#-privacy)
+- ⚖️ [License](#️-license)
 
 
 ## 📸 Preview
