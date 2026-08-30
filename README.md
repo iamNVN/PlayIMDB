@@ -2,8 +2,8 @@
 
 <div align="center">
   <img src="https://raw.githubusercontent.com/iamNVN/PlayIMDB/refs/heads/master/icons/logo.png"
-       width="60"
-       height="60"
+       width="120"
+       height="120"
        alt="Play IMDb Logo">
 
   <h1 style="display:inline;">Play IMDb</h1>
