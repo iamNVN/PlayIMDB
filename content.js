@@ -10,6 +10,7 @@
   let overlayElement = null;
 
   let extensionEnabled = true;
+  let hasAutoPlayed = false;
 
   function init() {
     // Fetch initial setting
@@ -18,10 +19,12 @@
       if (extensionEnabled) {
         checkAndInject();
 
-        // Auto-play if ?play=1 is present
-        if (window.location.search.includes('play=1') && !document.querySelector('.play-imdb-overlay')) {
+        if (!hasAutoPlayed && window.location.search.includes('play=1') && document.body) {
           const info = getImdbInfo();
-          if (info) openPlayer(info);
+          if (info) {
+            hasAutoPlayed = true;
+            openPlayer(info);
+          }
         }
       } else {
         removeButton();
@@ -32,6 +35,18 @@
     const observer = new MutationObserver(() => {
       if (extensionEnabled) {
         checkAndInject();
+
+        if (window.location.search.includes('play=1')) {
+          if (!hasAutoPlayed && document.body) {
+            const info = getImdbInfo();
+            if (info) {
+              hasAutoPlayed = true;
+              openPlayer(info);
+            }
+          }
+        } else {
+          hasAutoPlayed = false;
+        }
       } else {
         removeButton();
       }
@@ -77,16 +92,9 @@
     if (btn) btn.remove();
   }
 
-  function injectButton(info) {
+  function scrapeMovieDetails(info) {
     const h1 = document.querySelector('h1');
-    if (!h1) return;
-
-    const targetContainer = h1.parentElement;
-    targetContainer.classList.add('play-imdb-title-grid');
-
-    if (!targetContainer) return;
-
-    // Extract details and save to local storage for the popup
+    if (!h1) return null;
     const titleText = h1.innerText;
     const ratingSpan = document.querySelector('[data-testid="hero-rating-bar__aggregate-rating__score"] span');
     const rating = ratingSpan ? ratingSpan.innerText.replace(/\/10$/, '') : 'N/A';
@@ -100,7 +108,6 @@
         break;
       }
     }
-
     let genre = '';
     const genreContainer = document.querySelector('[data-testid="genres"]') || document.querySelector('[data-testid="interests"]');
     if (genreContainer) {
@@ -110,22 +117,34 @@
       const genreLinks = [...document.querySelectorAll('a[href*="genres="]')].map(el => el.innerText.trim()).filter(Boolean);
       if (genreLinks.length > 0) genre = genreLinks[0];
     }
-
     let metaText = [runtime, genre].filter(Boolean).join(' • ');
     if (!metaText) metaText = 'Details unavailable';
     const posterImg = document.querySelector('.ipc-poster img');
     const posterSrc = posterImg ? posterImg.src : null;
+    return {
+      title: titleText,
+      rating: rating,
+      meta: metaText,
+      imdbId: info.imdb_id,
+      posterSrc: posterSrc,
+      media_type: info.media_type
+    };
+  }
 
-    chrome.storage.local.set({
-      lastMovie: {
-        title: titleText,
-        rating: rating,
-        meta: metaText,
-        imdbId: info.imdb_id,
-        posterSrc: posterSrc,
-        media_type: info.media_type
-      }
-    });
+  function injectButton(info) {
+    const h1 = document.querySelector('h1');
+    if (!h1) return;
+
+    const targetContainer = h1.parentElement;
+    targetContainer.classList.add('play-imdb-title-grid');
+
+    if (!targetContainer) return;
+
+    // Extract details and save to local storage for the popup
+    const movieData = scrapeMovieDetails(info);
+    if (movieData) {
+      chrome.storage.local.set({ lastMovie: movieData });
+    }
 
     const wrapper = document.createElement('div');
     wrapper.className = 'play-imdb-btn-wrapper';
@@ -182,7 +201,6 @@
     iframe.className = 'play-imdb-iframe';
     iframe.src = video_url;
     iframe.allow = 'autoplay; fullscreen; picture-in-picture';
-    iframe.allowFullscreen = true;
     playerContainer.appendChild(iframe);
 
     // Footer
@@ -281,6 +299,13 @@
   chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.action === 'open_player') {
       openPlayer({ imdb_id: request.url.split('/').pop(), media_type: 'custom', customUrl: request.url });
+    } else if (request.action === 'get_movie_info') {
+      const info = getImdbInfo();
+      if (info) {
+        sendResponse(scrapeMovieDetails(info));
+      } else {
+        sendResponse(null);
+      }
     }
   });
 

@@ -283,30 +283,45 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    // Since we are on IMDb, load lastMovie from storage (populated by content.js)
-    chrome.storage.local.get(['lastMovie'], d => {
-      if (d.lastMovie) {
-        showDetected(d.lastMovie, tab.id);
+    function handleDetected(movieData) {
+      if (!movieData) {
+        showNoPage();
+        return;
+      }
+      showDetected(movieData, tab.id);
 
-        // Auto-heal watchlist with missing or old meta
-        chrome.storage.local.get({ watchlist: [] }, wlData => {
-          let updated = false;
-          const newList = wlData.watchlist.map(m => {
-            if (m.imdbId === d.lastMovie.imdbId && m.meta !== d.lastMovie.meta) {
-              updated = true;
-              return { ...m, meta: d.lastMovie.meta, title: d.lastMovie.title, posterSrc: d.lastMovie.posterSrc };
-            }
-            return m;
+      // Auto-heal watchlist with missing or old meta
+      chrome.storage.local.get({ watchlist: [] }, wlData => {
+        let updated = false;
+        const newList = wlData.watchlist.map(m => {
+          if (m.imdbId === movieData.imdbId && m.meta !== movieData.meta) {
+            updated = true;
+            return { ...m, meta: movieData.meta, title: movieData.title, posterSrc: movieData.posterSrc };
+          }
+          return m;
+        });
+        if (updated) {
+          chrome.storage.local.set({ watchlist: newList }, () => {
+            renderWatchlist();
           });
-          if (updated) {
-            chrome.storage.local.set({ watchlist: newList }, () => {
-              renderWatchlist();
-            });
+        }
+      });
+    }
+
+    // Request fresh info from the active tab's content script
+    chrome.tabs.sendMessage(tab.id, { action: 'get_movie_info' }, (response) => {
+      if (chrome.runtime.lastError || !response) {
+        // Fallback to storage in case content script isn't responsive
+        chrome.storage.local.get(['lastMovie'], d => {
+          if (d.lastMovie) {
+            handleDetected(d.lastMovie);
+          } else {
+            showNoPage();
           }
         });
-      } else {
-        showNoPage();
+        return;
       }
+      handleDetected(response);
     });
   });
 });
