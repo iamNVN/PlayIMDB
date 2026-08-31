@@ -122,7 +122,8 @@
         rating: rating,
         meta: metaText,
         imdbId: info.imdb_id,
-        posterSrc: posterSrc
+        posterSrc: posterSrc,
+        media_type: info.media_type
       }
     });
 
@@ -148,7 +149,7 @@
   function getVideoUrl(info) {
     if (info.customUrl) return info.customUrl;
     let video_url = `${BASE_URL}/movie/${info.imdb_id}`;
-    if (info.media_type === 'video.tv_show') {
+    if (info.media_type === 'video.tv_show' || info.media_type === 'video.episode') {
       video_url = `${BASE_URL}/tv/${info.imdb_id}?autonext=1`;
     }
     return video_url;

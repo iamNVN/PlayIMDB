@@ -234,7 +234,10 @@ document.addEventListener('DOMContentLoaded', () => {
     newTabBtn.disabled = false;
     qaWatchlist.disabled = false;
 
-    const videoUrl = `https://proxy.garageband.rocks/embed/movie/${info.imdbId}`;
+    let videoUrl = `https://proxy.garageband.rocks/embed/movie/${info.imdbId}`;
+    if (info.media_type === 'video.tv_show' || info.media_type === 'video.episode') {
+      videoUrl = `https://proxy.garageband.rocks/embed/tv/${info.imdbId}?autonext=1`;
+    }
 
     // Clone to strip old listeners
     const pb2 = playBtn.cloneNode(true);
