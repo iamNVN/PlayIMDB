@@ -313,7 +313,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (chrome.runtime.lastError || !response) {
         // Fallback to storage in case content script isn't responsive
         chrome.storage.local.get(['lastMovie'], d => {
-          if (d.lastMovie) {
+          if (d.lastMovie && tab.url.includes(d.lastMovie.imdbId)) {
             handleDetected(d.lastMovie);
           } else {
             showNoPage();
