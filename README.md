@@ -47,9 +47,7 @@ A browser extension that lets you watch movies & TV shows directly on IMDb with 
   <img src="https://raw.githubusercontent.com/iamNVN/PlayIMDB/refs/heads/master/icons/preview1.png" width="300" alt="Play IMDb on IMDb">
 </p>
 
-[https://raw.githubusercontent.com/iamNVN/PlayIMDB/refs/heads/master/icons/demo.mp4](https://raw.githubusercontent.com/iamNVN/PlayIMDB/refs/heads/master/icons/demo.mp4)
-
-
+[https://github.com/user-attachments/assets/f4047949-c7ce-4de3-bfa8-87ef9ce61bd0](https://github.com/user-attachments/assets/f4047949-c7ce-4de3-bfa8-87ef9ce61bd0)
 
 
 ## ✨ Features
